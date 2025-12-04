@@ -1,6 +1,10 @@
-<?php include "layouts/header.php"; ?>
-
-<?php include "layouts/navbar.php"; ?>
+<?php
+require "../config/koneksi.php";
+$getDataKelas = mysqli_query($koneksi, "SELECT id_kelas, nama_kelas FROM kelas ORDER BY nama_kelas ASC");
+$dataKelas = mysqli_fetch_all($getDataKelas, MYSQLI_ASSOC);
+include "layouts/header.php";
+include "layouts/navbar.php";
+?>
 
 <style>
     .section-title {
@@ -36,24 +40,25 @@
 
                 <div class="section-title">Tambah Siswa</div>
 
-                <form>
+                <form action="../controllers/siswa/siswa_add.php" method="POST">
 
                     <div class="mb-3">
                         <label class="form-label">NIS</label>
-                        <input type="text" class="form-control" placeholder="Masukkan NIS">
+                        <input type="text" class="form-control" placeholder="Masukkan NIS" name="nis">
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Nama Lengkap</label>
-                        <input type="text" class="form-control" placeholder="Masukkan Nama Siswa">
+                        <input type="text" class="form-control" placeholder="Masukkan Nama Siswa" name="nama_lengkap">
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Kelas</label>
-                        <select class="form-select">
+                        <select class="form-select" name="id_kelas">
                             <option selected disabled>Pilih kelas...</option>
-                            <option>X IPA 1</option>
-                            <option>XI IPS 1</option>
+                            <?php foreach ($dataKelas as $kelas): ?>
+                                <option value="<?= $kelas['id_kelas'] ?>"><?= $kelas['nama_kelas'] ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
 
