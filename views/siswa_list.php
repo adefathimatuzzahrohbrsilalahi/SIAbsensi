@@ -39,7 +39,7 @@
       <div class="d-flex justify-content-between align-items-center mb-4">
         <h4 class="fw-bold mb-0">Daftar Siswa</h4>
 
-        <a class="btn btn-success btn-modern" href="siswa_add.html">
+        <a class="btn btn-success btn-modern" href="siswa_add.php">
           <i class="bi bi-plus-circle me-1"></i> Tambah Siswa
         </a>
       </div>
