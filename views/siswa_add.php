@@ -1,4 +1,9 @@
 <?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../views/login.php");
+    exit;
+}
 require "../config/koneksi.php";
 $getDataKelas = mysqli_query($koneksi, "SELECT id_kelas, nama_kelas FROM kelas ORDER BY nama_kelas ASC");
 $dataKelas = mysqli_fetch_all($getDataKelas, MYSQLI_ASSOC);

@@ -50,7 +50,7 @@
                 <li class="nav-item"><a class="nav-link" href="dashboard.php"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a></li>
                 <li class="nav-item"><a class="nav-link" href="siswa_list.php"><i class="bi bi-people me-1"></i>Siswa</a></li>
                 <li class="nav-item"><a class="nav-link" href="absensi_take.php"><i class="bi bi-pencil-square me-1"></i>Input Absensi</a></li>
-                <li class="nav-item"><a class="nav-link text-warning" href="login.php"><i class="bi bi-box-arrow-right me-1"></i>Logout</a></li>
+                <li class="nav-item"><a class="nav-link text-warning" href="logout.php"><i class="bi bi-box-arrow-right me-1"></i>Logout</a></li>
             </ul>
         </div>
     </div>
