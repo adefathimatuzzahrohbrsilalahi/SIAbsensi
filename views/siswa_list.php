@@ -1,6 +1,9 @@
-<?php include "layouts/header.php"; ?>
-
-<?php include "layouts/navbar.php"; ?>
+<?php
+require "../config/koneksi.php";
+$getDataSiswa = mysqli_query($koneksi, "SELECT siswa.nis, siswa.nama_siswa, kelas.nama_kelas FROM siswa INNER JOIN kelas ON kelas.id_kelas = siswa.id_kelas ORDER BY siswa.nama_siswa ASC");
+$dataSiswa = mysqli_fetch_all($getDataSiswa, MYSQLI_ASSOC);
+include "layouts/header.php";
+include "layouts/navbar.php"; ?>
 
 <style>
   .card-modern {
@@ -59,53 +62,16 @@
               <th style="width:120px;">NIS</th>
               <th>Nama</th>
               <th style="width:140px;">Kelas</th>
-              <th style="width:160px;">Aksi</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>102345</td>
-              <td>Ahmad Fajar</td>
-              <td>XII IPA 1</td>
-              <td>
-                <a class="btn btn-primary btn-sm btn-modern me-1">
-                  <i class="bi bi-pencil-square"></i>
-                </a>
-                <a class="btn btn-danger btn-sm btn-modern">
-                  <i class="bi bi-trash"></i>
-                </a>
-              </td>
-            </tr>
-
-            <tr>
-              <td>102346</td>
-              <td>Siti Rahma</td>
-              <td>XII IPA 1</td>
-              <td>
-                <a class="btn btn-primary btn-sm btn-modern me-1"><i class="bi bi-pencil-square"></i></a>
-                <a class="btn btn-danger btn-sm btn-modern"><i class="bi bi-trash"></i></a>
-              </td>
-            </tr>
-
-            <tr>
-              <td>102347</td>
-              <td>Budi Santoso</td>
-              <td>XII IPA 1</td>
-              <td>
-                <a class="btn btn-primary btn-sm btn-modern me-1"><i class="bi bi-pencil-square"></i></a>
-                <a class="btn btn-danger btn-sm btn-modern"><i class="bi bi-trash"></i></a>
-              </td>
-            </tr>
-
-            <tr>
-              <td>102188</td>
-              <td>Ade Fathimatuzzahroh Br Silalahi</td>
-              <td>XII IPA 1</td>
-              <td>
-                <a class="btn btn-primary btn-sm btn-modern me-1"><i class="bi bi-pencil-square"></i></a>
-                <a class="btn btn-danger btn-sm btn-modern"><i class="bi bi-trash"></i></a>
-              </td>
-            </tr>
+            <?php foreach ($dataSiswa as $row): ?>
+              <tr>
+                <td><?= $row['nis']; ?></td>
+                <td><?= $row['nama_siswa']; ?></td>
+                <td><?= $row['nama_kelas']; ?></td>
+              </tr>
+            <?php endforeach; ?>
           </tbody>
         </table>
       </div>
