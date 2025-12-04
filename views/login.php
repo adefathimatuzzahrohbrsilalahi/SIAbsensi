@@ -1,26 +1,28 @@
 <?php include "layouts/header.php"; ?>
 
-<div class="container">
 
-  <div class="row justify-content-center">
-    <div class="col-md-5">
-      <div class="card card-sm p-4">
-        <h4 class="mb-3">Login</h4>
-        <form>
-          <div class="mb-3">
-            <label class="form-label">Username</label>
-            <input class="form-control" value="admin">
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Password</label>
-            <input type="password" class="form-control" value="1234">
-          </div>
-          <button class="btn btn-primary w-100">Masuk</button>
-        </form>
-      </div>
+<div class="min-vh-100 d-flex align-items-center justify-content-center bg-light">
+  <div class="col-md-4">
+    <div class="card shadow-lg border-0 rounded-4 p-4">
+      <h3 class="text-center mb-4 fw-semibold">Masuk</h3>
+
+      <form action="../controllers/auth/login.php" method="POST">
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control rounded-3" name="username" placeholder="Username">
+          <label for="username">Username</label>
+        </div>
+
+        <div class="form-floating mb-4">
+          <input type="password" class="form-control rounded-3" name="password" placeholder="Password">
+          <label for="password">Password</label>
+        </div>
+
+        <button class="btn btn-primary rounded-3 py-2 w-100 fw-semibold">
+          Masuk
+        </button>
+      </form>
     </div>
   </div>
-
 </div>
 
 <?php include "layouts/scripts.php"; ?>
