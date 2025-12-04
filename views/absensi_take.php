@@ -1,6 +1,9 @@
-<?php include "layouts/header.php"; ?>
-
-<?php include "layouts/navbar.php"; ?>
+<?php
+require "../config/koneksi.php";
+$getDataSiswa = mysqli_query($koneksi, "SELECT siswa.nis, siswa.nama_siswa FROM siswa INNER JOIN kelas ON kelas.id_kelas = siswa.id_kelas ORDER BY siswa.nama_siswa ASC");
+$dataSiswa = mysqli_fetch_all($getDataSiswa, MYSQLI_ASSOC);
+include "layouts/header.php";
+include "layouts/navbar.php"; ?>
 
 <style>
   .card-modern {
@@ -39,18 +42,17 @@
 
     <div class="card-modern">
 
-      <!-- Header -->
-      <div class="d-flex justify-content-between align-items-center mb-4">
-        <h4 class="fw-bold mb-0">Input Absensi</h4>
+      <form action="../controllers/absensi/absensi_take.php" method="POST">
 
-        <div class="d-flex align-items-center">
-          <label class="form-label mb-0 me-2 fw-semibold">Tanggal</label>
-          <input type="date" class="form-control" style="width: 200px;" value="2025-12-04">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h4 class="fw-bold mb-0">Input Absensi</h4>
+
+          <div class="d-flex align-items-center">
+            <label class="form-label mb-0 me-2 fw-semibold">Tanggal</label>
+            <input type="date" name="tanggal" class="form-control" style="width: 200px;" value="<?= date('Y-m-d'); ?>">
+          </div>
         </div>
-      </div>
-
-      <!-- Form -->
-      <form>
 
         <div class="table-responsive">
           <table class="table table-modern table-bordered align-middle">
@@ -63,55 +65,28 @@
               </tr>
             </thead>
             <tbody>
+              <?php foreach ($dataSiswa as $row): ?>
+                <tr>
+                  <td><?= $row['nis']; ?></td>
+                  <td><?= $row['nama_siswa']; ?></td>
 
-              <tr>
-                <td>102345</td>
-                <td>Ahmad Fajar</td>
-                <td>
-                  <select class="form-select form-select-sm" name="status[102345]">
-                    <option>Hadir</option>
-                    <option>Izin</option>
-                    <option>Sakit</option>
-                    <option>Alpha</option>
-                  </select>
-                </td>
-                <td>
-                  <input class="form-control form-control-sm" name="ket[102345]" placeholder="Opsional...">
-                </td>
-              </tr>
+                  <td>
+                    <select class="form-select form-select-sm"
+                      name="status[<?= $row['id_siswa']; ?>]">
+                      <option value="Hadir">Hadir</option>
+                      <option value="Izin">Izin</option>
+                      <option value="Sakit">Sakit</option>
+                      <option value="Alfa">Alfa</option>
+                    </select>
+                  </td>
 
-              <tr>
-                <td>102346</td>
-                <td>Siti Rahma</td>
-                <td>
-                  <select class="form-select form-select-sm" name="status[102346]">
-                    <option>Hadir</option>
-                    <option>Izin</option>
-                    <option>Sakit</option>
-                    <option>Alpha</option>
-                  </select>
-                </td>
-                <td>
-                  <input class="form-control form-control-sm" name="ket[102346]" placeholder="Opsional...">
-                </td>
-              </tr>
-
-              <tr>
-                <td>102188</td>
-                <td>Ade Fathimatuzzahroh Br Silalahi</td>
-                <td>
-                  <select class="form-select form-select-sm" name="status[102188]">
-                    <option>Hadir</option>
-                    <option>Izin</option>
-                    <option>Sakit</option>
-                    <option>Alpha</option>
-                  </select>
-                </td>
-                <td>
-                  <input class="form-control form-control-sm" name="ket[102188]" placeholder="Opsional...">
-                </td>
-              </tr>
-
+                  <td>
+                    <input class="form-control form-control-sm"
+                      name="ket[<?= $row['id_siswa']; ?>]"
+                      placeholder="Opsional...">
+                  </td>
+                </tr>
+              <?php endforeach; ?>
             </tbody>
           </table>
         </div>
@@ -119,6 +94,7 @@
         <button class="btn btn-primary btn-modern mt-3">
           <i class="bi bi-check-circle me-1"></i> Simpan Absensi
         </button>
+
       </form>
 
     </div>
