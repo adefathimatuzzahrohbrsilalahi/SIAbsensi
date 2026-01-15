@@ -26,6 +26,83 @@ if ($totalHariIni == 0) {
 include "layouts/header.php";
 include "layouts/navbar.php"; ?>
 
+<style>
+  body {
+    background: linear-gradient(135deg, #ff4f9a, #ff8ccf, #ffd1e8);
+    min-height: 100vh;
+  }
+
+  .stat-card,
+  .summary-card {
+    border-radius: 22px;
+    border: none;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 18px 45px rgba(255, 79, 154, 0.35);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.35s ease;
+  }
+
+  .stat-card::after,
+  .summary-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 22px;
+    padding: 2px;
+    background: linear-gradient(135deg, #ff2f92, #ff8fd1);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 28px 65px rgba(255, 47, 146, 0.55);
+  }
+
+  .stat-card h6 {
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    color: #b1005d;
+  }
+
+  .stat-card h2 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ff2f92, #ff77c8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .stat-icon {
+    position: absolute;
+    right: 18px;
+    bottom: 18px;
+    font-size: 3.4rem;
+    opacity: 0.18;
+    color: #ff2f92 !important;
+  }
+
+  .summary-card h5 {
+    font-weight: 700;
+    background: linear-gradient(135deg, #ff2f92, #ff77c8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .summary-card p {
+    font-size: 0.95rem;
+    color: #6b2c4c;
+    line-height: 1.7;
+  }
+
+  .summary-card i {
+    color: #ff2f92;
+  }
+</style>
+
 <div class="container" style="padding-top: 90px;">
   <div class="py-4">
 
@@ -71,6 +148,5 @@ include "layouts/navbar.php"; ?>
     </div>
   </div>
 
-  <?php include "layouts/scripts.php"; ?>
-
-  <?php include "layouts/footer.php"; ?>
+<?php include "layouts/scripts.php"; ?>
+<?php include "layouts/footer.php"; ?>

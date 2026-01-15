@@ -5,57 +5,137 @@ if (!isset($_SESSION['user_id'])) {
   exit;
 }
 require "../config/koneksi.php";
-$getDataSiswa = mysqli_query($koneksi, "SELECT siswa.nis, siswa.nama_siswa FROM siswa INNER JOIN kelas ON kelas.id_kelas = siswa.id_kelas ORDER BY siswa.nama_siswa ASC");
+
+// Ambil data siswa
+$getDataSiswa = mysqli_query($koneksi, "
+  SELECT siswa.id_siswa, siswa.nis, siswa.nama_siswa
+  FROM siswa
+  INNER JOIN kelas ON kelas.id_kelas = siswa.id_kelas
+  ORDER BY siswa.nama_siswa ASC
+");
 $dataSiswa = mysqli_fetch_all($getDataSiswa, MYSQLI_ASSOC);
+
 include "layouts/header.php";
-include "layouts/navbar.php"; ?>
+include "layouts/navbar.php";
+?>
 
 <style>
-  .card-modern {
-    border: none;
-    border-radius: 18px;
-    padding: 24px;
-    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.06);
-    background: #fff;
-  }
+/* ===== GLOBAL BACKGROUND ===== */
+body {
+  background: linear-gradient(135deg, #ffd6e8, #ffeaf3);
+}
 
-  .table-modern thead th {
-    background: #f8f9fa;
-    border-bottom: 2px solid #dee2e6;
-    font-weight: 600;
-  }
+/* ===== CARD ===== */
+.card-modern {
+  border: none;
+  border-radius: 24px;
+  padding: 30px;
+  background: #ffffff;
+  box-shadow: 0 15px 40px rgba(255, 105, 180, 0.35);
+  animation: fadeUp 0.6s ease;
+}
 
-  .table-modern tbody tr:hover {
-    background: #f3f6ff;
-    transition: 0.2s;
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
   }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
-  .form-control-sm,
-  .form-select-sm {
-    border-radius: 8px;
-  }
+/* ===== TITLE ===== */
+h4 {
+  color: #c2185b;
+}
 
-  .btn-modern {
-    border-radius: 10px;
-    padding: 8px 20px;
-    font-weight: 500;
-  }
+/* ===== TABLE ===== */
+.table-modern {
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.table-modern thead th {
+  background: linear-gradient(135deg, #ff5fa2, #ff85c2);
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  text-align: center;
+}
+
+.table-modern tbody tr {
+  transition: all 0.3s ease;
+}
+
+.table-modern tbody tr:hover {
+  background: #ffe3f0;
+}
+
+.table-modern td {
+  vertical-align: middle;
+}
+
+/* ===== FORM ===== */
+.form-label {
+  color: #c2185b;
+  font-weight: 600;
+}
+
+.form-control,
+.form-control-sm,
+.form-select,
+.form-select-sm {
+  border-radius: 12px;
+  border: 1px solid #ffb6d5;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #ff5fa2;
+  box-shadow: 0 0 0 0.25rem rgba(255, 95, 162, 0.3);
+}
+
+/* ===== BUTTON ===== */
+.btn-modern {
+  border-radius: 14px;
+  padding: 12px 30px;
+  font-weight: 600;
+  background: linear-gradient(135deg, #ff5fa2, #ff87c2);
+  border: none;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.btn-modern:hover {
+  background: linear-gradient(135deg, #ff3d91, #ff6fb6);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(255, 95, 162, 0.55);
+}
+
+/* ===== TABLE BORDER ===== */
+.table-bordered > :not(caption) > * > * {
+  border-color: #ffd1e6;
+}
 </style>
 
 <div class="container" style="padding-top: 90px;">
   <div class="py-4">
 
     <div class="card-modern">
-
       <form action="../controllers/absensi/absensi_take.php" method="POST">
-
 
         <div class="d-flex justify-content-between align-items-center mb-4">
           <h4 class="fw-bold mb-0">Input Absensi</h4>
-
           <div class="d-flex align-items-center">
-            <label class="form-label mb-0 me-2 fw-semibold">Tanggal</label>
-            <input type="date" name="tanggal" class="form-control" style="width: 200px;" value="<?= date('Y-m-d'); ?>">
+            <label class="form-label mb-0 me-2">Tanggal</label>
+            <input type="date"
+                   name="tanggal"
+                   class="form-control"
+                   style="width: 200px;"
+                   value="<?= date('Y-m-d'); ?>"
+                   required>
           </div>
         </div>
 
@@ -71,42 +151,40 @@ include "layouts/navbar.php"; ?>
             </thead>
             <tbody>
               <?php foreach ($dataSiswa as $row): ?>
-                <tr>
-                  <td><?= $row['nis']; ?></td>
-                  <td><?= $row['nama_siswa']; ?></td>
-
-                  <td>
-                    <select class="form-select form-select-sm"
-                      name="status[<?= $row['id_siswa']; ?>]">
-                      <option value="Hadir">Hadir</option>
-                      <option value="Izin">Izin</option>
-                      <option value="Sakit">Sakit</option>
-                      <option value="Alfa">Alfa</option>
-                    </select>
-                  </td>
-
-                  <td>
-                    <input class="form-control form-control-sm"
-                      name="ket[<?= $row['id_siswa']; ?>]"
-                      placeholder="Opsional...">
-                  </td>
-                </tr>
+              <tr>
+                <td><?= htmlspecialchars($row['nis']); ?></td>
+                <td><?= htmlspecialchars($row['nama_siswa']); ?></td>
+                <td>
+                  <select class="form-select form-select-sm" name="status[]" required>
+                    <option value="Hadir">Hadir</option>
+                    <option value="Izin">Izin</option>
+                    <option value="Sakit">Sakit</option>
+                    <option value="Alfa">Alfa</option>
+                  </select>
+                </td>
+                <td>
+                  <input type="text"
+                         class="form-control form-control-sm"
+                         name="keterangan[]"
+                         placeholder="Opsional...">
+                  <input type="hidden" name="id_siswa[]" value="<?= $row['id_siswa']; ?>">
+                  <input type="hidden" name="nis[]" value="<?= $row['nis']; ?>">
+                </td>
+              </tr>
               <?php endforeach; ?>
             </tbody>
           </table>
         </div>
 
-        <button class="btn btn-primary btn-modern mt-3">
+        <button type="submit" class="btn btn-modern mt-3" name="submit">
           <i class="bi bi-check-circle me-1"></i> Simpan Absensi
         </button>
 
       </form>
-
     </div>
 
   </div>
 </div>
 
 <?php include "layouts/scripts.php"; ?>
-
 <?php include "layouts/footer.php"; ?>

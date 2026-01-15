@@ -2,14 +2,14 @@
     /* Navbar Glass */
     .navbar-glass {
         backdrop-filter: blur(12px);
-        background: rgba(13, 110, 253, .85) !important;
+        background: rgba(253, 13, 105, 0.85) !important;
         /* bootstrap primary */
     }
 
     .stat-card {
         border: none;
         border-radius: 16px;
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
         position: relative;
         overflow: hidden;
         transition: .2s ease;
